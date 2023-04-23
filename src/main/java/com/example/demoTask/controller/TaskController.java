@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demoTask.exception.ResourceNotFoundException;
 import com.example.demoTask.model.Task;
 import com.example.demoTask.repository.TaskRepository;
+import com.example.demoTask.configuration.WebSecurityConfiguration;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -35,30 +37,30 @@ public class TaskController {
 
   // create task rest api
   @PostMapping("/tasks")
-  public Task createTask(@RequestBody Task employee) {
-    return taskRepository.save(employee);
+  public Task createTask(@RequestBody Task task) {
+    return taskRepository.save(task);
   }
 
   // get task by id rest api
   @GetMapping("/tasks/{id}")
   public ResponseEntity<Task> getTaskById(@PathVariable Long id){
-    Task employee = taskRepository.findById(id)
+    Task task = taskRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("No task exists with id :" + id));
-    return ResponseEntity.ok(employee);
+    return ResponseEntity.ok(task);
   }
 
   // update task rest api
 
   @PutMapping("/tasks/{id}")
   public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task taskDetails){
-    Task employee = taskRepository.findById(id)
+    Task task = taskRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Task does not exist with id :" + id));
 
-    employee.setTitle(taskDetails.getTitle());
-    employee.setDescription(taskDetails.getDescription());
-    employee.setComplete(taskDetails.isCompleted());
+    task.setTitle(taskDetails.getTitle());
+    task.setDescription(taskDetails.getDescription());
+    task.setComplete(taskDetails.isCompleted());
 
-    Task updatedTask = taskRepository.save(employee);
+    Task updatedTask = taskRepository.save(task);
     return ResponseEntity.ok(updatedTask);
   }
 
