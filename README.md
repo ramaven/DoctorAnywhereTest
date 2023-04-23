@@ -29,6 +29,6 @@ Building a Simple RESTful API with Java and Spring Boot
 
 ##### How to run this project:
 
-1. Clone the repository
+1. Clone the repository from https://github.com/ramaven/DoctorAnywhereTest
 2. Set language level in project structure to 17 and use Java SDK 17. 
 3. Navigate to te DemoTaskApplication file and run the main method. 
